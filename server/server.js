@@ -12,13 +12,13 @@ var io = socketIO(server);
 io.on('connection',(socket) => {
   console.log('new user connected');
 
-  socket.emit('newMessage',{
-    from: 'John',
-    text: 'Hey, newMessage',
-    createdAt: 123
-  });
   socket.on('createMessage',function (message) {
     console.log('createMessage',message);
+    io.emit('newMessage',{
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    });
   });
   socket.on('disconnect',() => {
     console.log('user was disconnected');
