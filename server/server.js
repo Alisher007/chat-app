@@ -17,16 +17,17 @@ io.on('connection',(socket) => {
   socket.emit('newMessage',generateMessage('Admin','welcome to chat'));
   socket.broadcast.emit('newMessage',generateMessage('Admin','new user joines'));
 
-  socket.on('createMessage',function (message) {
+  socket.on('createMessage',function (message,callback) {
     console.log('createMessage',message);
     io.emit('newMessage',generateMessage(message.from, message.text));
+    callback('This is from the server');
     // socket.broadcast.emit('newMessage',{
     //   from: message.from,
     //   text: message.text,
     //   createdAt: new Date().getTime()
     // });
   });
-  
+
   socket.on('disconnect',() => {
     console.log('user was disconnected');
   });
